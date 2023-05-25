@@ -1,0 +1,42 @@
+{% extends 'common_parts/base.html' %}
+{% block title %}
+    <title>Словарь китайских иероглифов</title>
+{% endblock title %}
+{% block content %}
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-xs-4">
+        <h2><strong>Список ключей</strong></h2>
+        <ul class="list-inline">
+          {% for key in keys_list %}
+            <li>{{ key }} [{{ key.pinyin }}] - 
+              {% for word in key.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          {% empty %}
+            <p>Еще нет ключей</p>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-xs-8">
+        <h2><strong>Случайные иероглифы</strong></h2>
+        <ul>
+          {% for character in ten_random_characters %}
+            <li>
+              <a class="active" href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a> 
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          {% empty %}
+            <p>Еще нет иероглифов</p>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

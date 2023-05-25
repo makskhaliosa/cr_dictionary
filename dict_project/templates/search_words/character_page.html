@@ -1,0 +1,47 @@
+{% extends 'common_parts/base.html' %}
+{% block title %}
+  <title>{{ character }}</title>
+{% endblock title %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1><strong>{{ character }}</strong></h1>
+      <p><strong>[{{ character.pinyin }}]</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+      <h3>Количество иероглифов</h3>
+      {{ characters_number }}
+      <br>  
+      {% if words_with_character %}
+      <hr>
+        <h3>Еще слова с этим иероглифом</h3>
+        <ul>
+          {% for word in words_with_character %}
+            <li>
+              <a href="{% url 'search_words:character_page' word %}">{{ word }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <div class="col-xs-8">
+      <h3>Перевод</h3>
+      {% for word in russian_words %}
+        <p><strong>{{ word.part_of_speech }}</strong> <em>{{ word }}</em></p>
+      {% empty %}
+        <p>Перевод пока не добавлен</p>
+      {% endfor %}
+      <hr>
+      <h3>Примеры употреблений</h3>
+      {% for example in usage_examples %}
+        <p>{{ example.chinese_example }} -- {{ example.russian_example }}</p>
+      {% empty %}
+        <p>Упс, скоро будут и примеры</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

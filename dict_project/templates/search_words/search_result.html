@@ -1,0 +1,234 @@
+{% extends 'common_parts/base.html' %}
+{% block title %}
+  <title>Результаты поиска</title>
+{% endblock title %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Поиск по слову 
+        {% for word in search %}
+          {{ word }}
+        {% endfor %}
+      </h1>
+    </div>
+  </div>
+  {% if result_chinese and result_pinyin and result_russian %}
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Иероглифы</strong></p>
+        {% for character in result_chinese %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a>
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Пиньинь</strong></p>
+        {% for character in result_pinyin %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a>
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Русские слова</strong></p>
+        {% for word in result_russian %}
+          {% for character in word.characters.all %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a> - {{ word }}
+            </li>
+          </ul>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  {% elif result_chinese and result_pinyin %}
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Иероглифы</strong></p>
+        {% for character in result_chinese %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a>
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Пиньинь</strong></p>
+        {% for character in result_pinyin %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a>
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+  {% elif result_chinese and result_russian %}
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Иероглифы</strong></p>
+        {% for character in result_chinese %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a>
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Русские слова</strong></p>
+        {% for word in result_russian %}
+          {% for character in word.characters.all %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a> - {{ word }}
+            </li>
+          </ul>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  {% elif result_pinyin and result_russian %}
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Пиньинь</strong></p>
+        {% for character in result_pinyin %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a>
+              [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><strong>Русские слова</strong></p>
+        {% for word in result_russian %}
+          {% for character in word.characters.all %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a> - {{ word }}
+            </li>
+          </ul>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  {% elif result_chinese %}
+    <div class="row">
+      <div class="col-xs-12">
+        {% for character in result_chinese %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a> [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+  {% elif result_pinyin %}
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Пиньинь</h4>
+        {% for character in result_pinyin %}
+          <ul>
+            <li>
+              <a href="{% url 'search_words:character_page' character %}">
+                {{ character }}
+              </a> [{{ character.pinyin }}] - 
+              {% for word in character.russian_meaning.all %}
+                {{ word }}
+              {% endfor %}
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+  {% elif result_russian %}
+    <div class="row">
+      <div class="col-xs-12">
+        {% for word in result_russian %}
+          {% for character in word.characters.all %}
+            <ul>
+              <li>
+                <a href="{% url 'search_words:character_page' character %}">
+                  {{ character }}
+                </a>
+                - {{ word }}
+              </li>
+            </ul>
+          {% endfor %}
+        {% empty %}
+          <p><em>Такого слова еще нет =(</em></p>
+        {% endfor %}
+      {% else %}
+        <p><em>Такого слова еще нет =(</em></p>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}

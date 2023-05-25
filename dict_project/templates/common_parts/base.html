@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'style.css' %}" rel="stylesheet"> -->
+    {% block title %}
+    <title>Словарь китайских иероглифов</title>
+    {% endblock title %}
+</head>
+<body>
+{% block header %}
+  <header>
+    <div class="contatiner py-5">
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+          <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+              <ul class="list-inline">
+                <li class="active">
+                  <a class="navbar-brand" href="{% url 'search_words:index' %}">Главная</a>
+                </li>
+                <li>
+                  <a class="navbar-brand" href="#">Ключи</a>
+                </li>
+                <li>
+                  <a class="navbar-brand" href="{% url 'polls:index' %}">Голосование</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock header %}
+<main>
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-xs-3">
+        <aside>
+            <h3>Может быть полезным</h3>
+            <ul>
+                <li>
+                  <a href="{% url 'search_words:character_create' %}">
+                    Добавить иероглиф
+                  </a>
+                </li>
+                <li>Статьи</li>
+                <li class="special">Чэнъюи</li>
+                <li><span>Еще что-то</span></li>
+            </ul>
+        </aside>
+      </div>
+      <div class="col-xs-9">
+        <div class="card-body">
+        <form action="{% url 'search_words:search_result' %}" method="get">
+          {% csrf_token %}
+          <div class="form-group">
+            <fieldset>
+                <label for="Поиск иероглифа">Поиск иероглифов</label>
+                <input class="form-control" type="text" name="input" placeholder="Введите слово">
+              </fieldset>
+          </div>
+          <button class="btn btn-primary" type="submit" value="Найти">
+            Найти
+          </button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block content %}{% endblock content %}
+</main>
+<footer class="page-footer font-small blue border-top">
+  <div class="footer-copyright text-center py-3"> 
+    <hr>
+    <p>Словарь китайских иероглифов, который защищен.</p>
+  </div>
+</footer>
+</body>
+</html>
